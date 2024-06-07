@@ -30,9 +30,12 @@
 #
 # HISTORY
 #
-#	Version: 1.0 - 11/01/2024
+#	Version: 1.1 - 07/06/2024
 #
 #	- 11/01/2024 - V1.0 - Created by Headbolt
+#
+#	- 07/06/2024 - V1.1 - Updated by Headbolt
+#				Updated to fix recent issues in the API paths to grab API auth token
 #
 ###############################################################################################################################################
 #
@@ -65,7 +68,7 @@ ExitCode=0 # Set Initial ExitCode
 AuthToken (){
 #
 /bin/echo 'Getting Athentication Token from JAMF'
-rawtoken=$(curl -s -u ${apiUser}:${apiPass} -X POST "${apiURL}/uapi/auth/tokens" | grep token) # This Authenticates against the JAMF API with the Provided details and obtains an Authentication Token
+rawtoken=$(curl -s -u "${apiUser}:${apiPass}" -X POST "${apiURL}/api/v1/auth/token" | grep token) # This Authenticates against the JAMF API with the Provided details and obtains an Authentication Token
 rawtoken=${rawtoken%?};
 token=$(echo $rawtoken | awk '{print$3}' | cut -d \" -f2)
 #
